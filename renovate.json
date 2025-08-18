@@ -10,7 +10,8 @@
         "/^apks/.*\\.yaml$/"
       ],
       "matchStrings": [
-        "package:\\s*\\n\\s*name:\\s*(?<depName>\\S+)\\s*\\n\\s*version:\\s*(?<currentValue>\\S+)[\\s\\S]*?update:[\\s\\S]*?github:[\\s\\S]*?identifier:\\s*(?<packageName>\\S+)"
+        "package:\\s*\\n\\s*name:\\s*(?<depName>\\S+)\\s*\\n\\s*version:\\s*(?<currentValue>\\S+)[\\s\\S]*?update:[\\s\\S]*?github:[\\s\\S]*?identifier:\\s*(?<packageName>\\S+)",
+        "package:\\s*\\n\\s*name:\\s*(?<depName>\\S+)\\s*\\n\\s*version:\\s*(?<currentValue>\\S+)[\\s\\S]*?pipeline:[\\s\\S]*?repository:\\s*https://github.com/(?<packageName>[^/\\s]+/[^/\\s]+)"
       ],
       "datasourceTemplate": "github-releases",
       "depNameTemplate": "{{{packageName}}}",
