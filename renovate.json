@@ -5,12 +5,18 @@
   ],
   "packageRules": [
     {
-      "matchPackageNames": ["nexthink-oss/ghup"],
+      "matchPackageNames": [
+        "nexthink-oss/ghup"
+      ],
       "enabled": true
     },
     {
-      "matchPackageNames": ["*"],
-      "excludePackageNames": ["nexthink-oss/ghup"],
+      "matchPackageNames": [
+        "*"
+      ],
+      "excludePackageNames": [
+        "nexthink-oss/ghup"
+      ],
       "enabled": false
     }
   ],
@@ -32,9 +38,6 @@
   "commitMessageTopic": "{{depName}}",
   "commitMessageExtra": "to {{newVersion}}",
   "prBodyTemplate": "This PR updates {{depName}} from {{currentVersion}} to {{newVersion}}.\n\n**Release Notes:**\n{{{changelogUrl}}}",
-  "schedule": [
-    "before 4am on Monday"
-  ],
   "timezone": "UTC",
   "labels": [
     "dependencies",
