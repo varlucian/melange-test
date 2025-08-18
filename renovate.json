@@ -21,7 +21,7 @@
         "/^apks/.*\\.yaml$/"
       ],
       "matchStrings": [
-        "package:\\s*\\n\\s*name:\\s*(?<depName>\\S+)\\s*\\n\\s*version:\\s*(?<currentValue>\\S+).*?update:\\s*\\n.*?github:\\s*\\n.*?identifier:\\s*(?<packageName>\\S+)"
+        "package:\\s*\\n\\s*name:\\s*(?<depName>\\S+)\\s*\\n\\s*version:\\s*(?<currentValue>\\S+)[\\s\\S]*?update:[\\s\\S]*?github:[\\s\\S]*?identifier:\\s*(?<packageName>\\S+)"
       ],
       "datasourceTemplate": "github-releases",
       "depNameTemplate": "{{{packageName}}}",
