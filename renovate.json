@@ -5,12 +5,12 @@
   ],
   "packageRules": [
     {
-      "matchPackageNames": [
-        "ghup"
-      ],
+      "matchPackageNames": ["ghup"],
       "enabled": true
     },
     {
+      "matchPackageNames": ["*"],
+      "excludePackageNames": ["ghup"],
       "enabled": false
     }
   ],
