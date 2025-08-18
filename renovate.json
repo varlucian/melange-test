@@ -19,6 +19,7 @@
       }
     }
   ],
+  "prHourlyLimit": 5,
   "customManagers": [
     {
       "customType": "regex",
