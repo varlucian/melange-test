@@ -5,12 +5,12 @@
   ],
   "packageRules": [
     {
-      "matchPackageNames": ["ghup"],
+      "matchPackageNames": ["nexthink-oss/ghup"],
       "enabled": true
     },
     {
       "matchPackageNames": ["*"],
-      "excludePackageNames": ["ghup"],
+      "excludePackageNames": ["nexthink-oss/ghup"],
       "enabled": false
     }
   ],
