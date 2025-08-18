@@ -5,9 +5,10 @@
   ],
   "packageRules": [
     {
-      "matchPackageNames": ["hashicorp/terraform"],
-      "separateMinorPatch": true,
-      "separateMajorMinor": true,
+      "matchPackagePatterns": [
+        "^hashicorp/terraform-terraform-"
+      ],
+      "groupName": null,
       "major": {
         "enabled": false
       },
@@ -28,10 +29,10 @@
       ],
       "matchStrings": [
         "package:\\s*\\n\\s*name:\\s*(?<depName>\\S+)\\s*\\n\\s*version:\\s*(?<currentValue>\\S+)[\\s\\S]*?update:[\\s\\S]*?github:[\\s\\S]*?identifier:\\s*(?<packageName>\\S+)",
-        "package:\\s*\\n\\s*name:\\s*(?<depName>\\S+)\\s*\\n\\s*version:\\s*(?<currentValue>\\S+)[\\s\\S]*?pipeline:[\\s\\S]*?repository:\\s*https://github.com/(?<packageName>[^/\\s]+/[^/\\s]+)"
+        "package:\\s*\\n\\s*name:\\s*(?<depName>[^\\s]+)\\s*\\n\\s*version:\\s*(?<currentValue>\\S+)[\\s\\S]*?pipeline:[\\s\\S]*?repository:\\s*https://github.com/(?<packageName>[^/\\s]+/[^/\\s]+)"
       ],
       "datasourceTemplate": "github-releases",
-      "depNameTemplate": "{{{packageName}}}",
+      "depNameTemplate": "{{{packageName}}}-{{{depName}}}",
       "versioningTemplate": "semver"
     }
   ],
