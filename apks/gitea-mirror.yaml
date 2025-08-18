@@ -17,6 +17,12 @@ pipeline:
       packages: .
       output: gitea-mirror
 
+update:
+  enabled: true
+  github:
+    strip-prefix: v
+    identifier: nexthink-oss/gitea-mirror
+
 test:
   pipeline:
     - name: gitea-mirror version

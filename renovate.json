@@ -3,23 +3,6 @@
   "extends": [
     "config:recommended"
   ],
-  "packageRules": [
-    {
-      "matchPackageNames": [
-        "nexthink-oss/ghup"
-      ],
-      "enabled": true
-    },
-    {
-      "matchPackageNames": [
-        "*"
-      ],
-      "excludePackageNames": [
-        "nexthink-oss/ghup"
-      ],
-      "enabled": false
-    }
-  ],
   "customManagers": [
     {
       "customType": "regex",
