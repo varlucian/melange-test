@@ -2,5 +2,52 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:recommended"
-  ]
+  ],
+  "packageRules": [
+    {
+      "matchPackageNames": [
+        "ghup"
+      ],
+      "enabled": true
+    },
+    {
+      "enabled": false
+    }
+  ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^apks/.*\\.yaml$/"
+      ],
+      "matchStrings": [
+        "package:\\s*\\n\\s*name:\\s*(?<depName>\\S+)\\s*\\n\\s*version:\\s*(?<currentValue>\\S+).*?update:\\s*\\n.*?github:\\s*\\n.*?identifier:\\s*(?<packageName>\\S+)"
+      ],
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "{{{packageName}}}",
+      "versioningTemplate": "semver"
+    }
+  ],
+  "commitMessageAction": "update",
+  "commitMessageTopic": "{{depName}}",
+  "commitMessageExtra": "to {{newVersion}}",
+  "prBodyTemplate": "This PR updates {{depName}} from {{currentVersion}} to {{newVersion}}.\n\n**Release Notes:**\n{{{changelogUrl}}}",
+  "schedule": [
+    "before 4am on Monday"
+  ],
+  "timezone": "UTC",
+  "labels": [
+    "dependencies",
+    "automated"
+  ],
+  "automerge": false,
+  "major": {
+    "automerge": false
+  },
+  "minor": {
+    "automerge": false
+  },
+  "patch": {
+    "automerge": false
+  }
 }
