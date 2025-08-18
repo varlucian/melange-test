@@ -3,6 +3,22 @@
   "extends": [
     "config:recommended"
   ],
+  "packageRules": [
+    {
+      "matchPackageNames": ["hashicorp/terraform"],
+      "separateMinorPatch": true,
+      "separateMajorMinor": true,
+      "major": {
+        "enabled": false
+      },
+      "minor": {
+        "enabled": false
+      },
+      "patch": {
+        "enabled": true
+      }
+    }
+  ],
   "customManagers": [
     {
       "customType": "regex",
