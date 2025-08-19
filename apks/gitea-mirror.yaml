@@ -1,6 +1,6 @@
 package:
   name: gitea-mirror
-  version: 0.5.0
+  version: 0.6.1
   epoch: 0
   copyright:
     - license: MIT
