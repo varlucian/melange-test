@@ -21,6 +21,7 @@
     }
   ],
   "prHourlyLimit": 5,
+  "recreateClosed": true,
   "customManagers": [
     {
       "customType": "regex",
