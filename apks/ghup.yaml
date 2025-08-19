@@ -1,6 +1,6 @@
 package:
   name: ghup
-  version: 0.15.0
+  version: 0.16.0
   epoch: 0
   description: A tool for managing GitHub repository tags and content from third-party automation systems
   copyright:
