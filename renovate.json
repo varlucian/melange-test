@@ -37,9 +37,9 @@
     }
   ],
   "commitMessageAction": "update",
-  "commitMessageTopic": "{{depName}}",
+  "commitMessageTopic": "{{packageName}}",
   "commitMessageExtra": "to {{newVersion}}",
-  "prBodyTemplate": "This PR updates {{depName}} from {{currentVersion}} to {{newVersion}}.\n\n**Release Notes:**\n{{{changelogUrl}}}",
+  "prBodyTemplate": "This PR updates **{{{depName}}}** from `{{{currentVersion}}}` to `{{{newVersion}}}`.\n\n**Details:**\n- Package File: `{{{packageFile}}}`\n- Update Type: {{{updateType}}}\n- Datasource: {{{datasource}}}\n\n**Links:**\n- [Repository]({{{sourceUrl}}})\n- [Releases]({{{sourceUrl}}}/releases)\n{{#if changelogUrl}}- [Changelog]({{{changelogUrl}}}){{/if}}\n\n---\n*This PR was automatically created by Renovate*",
   "timezone": "UTC",
   "labels": [
     "dependencies",
