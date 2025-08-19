@@ -40,7 +40,6 @@
   "commitMessageAction": "update",
   "commitMessageTopic": "{{packageName}}",
   "commitMessageExtra": "to {{newVersion}}",
-  "prBodyTemplate": "This PR updates the dependency in {{packageFile}}.\n\n**Update Details:**\n- From: {{currentValue}}\n- To: {{newValue}}\n- Type: {{updateType}}\n\n**Debug Info:**\n- depName: {{depName}}\n- packageName: {{packageName}}\n- datasource: {{datasource}}\n\n---\n*Created by Renovate*",
   "timezone": "UTC",
   "labels": [
     "dependencies",
