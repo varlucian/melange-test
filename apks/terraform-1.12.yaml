@@ -1,6 +1,6 @@
 package:
   name: terraform-1.12
-  version: 1.12.1
+  version: 1.13.0
   epoch: 2
   copyright:
     - license: BSL
