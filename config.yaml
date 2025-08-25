@@ -1,0 +1,7 @@
+---
+package:
+  name: "1.12.1"
+  type: terraform
+
+other:
+  settings: value
