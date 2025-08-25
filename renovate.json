@@ -9,6 +9,9 @@
         "hashicorp/terraform-terraform-1.12"
       ],
       "allowedVersions": "/^v?1\\.12\\./",
+      "rangeStrategy": "pin",
+      "respectLatest": false,
+      "ignoreUnstable": false,
       "major": {
         "enabled": false
       },
@@ -24,6 +27,9 @@
         "hashicorp/terraform-terraform-1.5"
       ],
       "allowedVersions": "/^v?1\\.5\\./",
+      "rangeStrategy": "pin", 
+      "respectLatest": false,
+      "ignoreUnstable": false,
       "major": {
         "enabled": false
       },
