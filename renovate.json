@@ -8,12 +8,27 @@
       "customType": "jsonata",
       "fileFormat": "yaml",
       "managerFilePatterns": [
-        "apks/*.yaml"
+        "apks/*.yaml",
+        "apks/!(bouncycastle*).yaml"
       ],
       "matchStrings": [
         "[{\"depName\": $substringAfter(pipeline[uses=\"git-checkout\"].with.repository, \"https://github.com/\"), \"currentValue\": package.version, \"sourceUrl\": pipeline[uses=\"git-checkout\"].with.repository}]"
       ],
       "datasourceTemplate": "github-releases"
+    },
+    {
+      "customType": "jsonata",
+      "fileFormat": "yaml",
+      "managerFilePatterns": [
+        "apks/bouncycastle*.yaml"
+      ],
+      "matchStrings": [
+        "[{\"depName\": package.name, \"currentValue\": package.version}]"
+      ],
+      "datasourceTemplate": "maven",
+      "depNameTemplate": "{{depName}}:{{currentValue}}",
+      "packageNameTemplate": "{{depName}}:{{currentValue}}",
+      "versioningTemplate": "maven"
     }
   ],
   "packageRules": [
