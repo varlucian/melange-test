@@ -11,8 +11,9 @@
         "apks/*.yaml"
       ],
       "matchStrings": [
-        "[{\"packageName\": package.name, \"currentValue\": package.version}]"
+        "[{\"depName\": \"hashicorp/terraform\", \"currentValue\": package.version}]"
       ],
+      "depNameTemplate": "hashicorp/terraform",
       "datasourceTemplate": "github-releases"
     }
   ],
@@ -21,9 +22,7 @@
       "matchPackageNames": [
         "hashicorp/terraform"
       ],
-      "updateTypes": [
-        "patch"
-      ],
+      "allowedVersions": "/^v?1\\.12\\./",
       "automerge": true,
       "schedule": [
         "before 6am on monday"
