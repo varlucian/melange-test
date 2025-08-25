@@ -12,7 +12,7 @@
         "^config\\.ya?ml$"
       ],
       "matchStrings": [
-        "package:\\s*\\n\\s*name:\\s*[\"']?(?<currentValue>[^\"'\\s]+)[\"']?"
+        "package:\\s*\\n\\s*name:\\s*[\"'](?<currentValue>[^\"']+)[\"']"
       ],
       "depNameTemplate": "terraform",
       "datasourceTemplate": "github-releases",
