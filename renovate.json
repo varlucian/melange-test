@@ -9,7 +9,7 @@
   "regexManagers": [
     {
       "fileMatch": [
-        "\\.ya?ml$"
+        "^config\\.ya?ml$"
       ],
       "matchStrings": [
         "package:\\s*\\n\\s*name:\\s*[\"']?(?<currentValue>[^\"'\\s]+)[\"']?"
