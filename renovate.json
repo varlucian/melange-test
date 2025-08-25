@@ -25,11 +25,24 @@
   "customManagers": [
     {
       "customType": "regex",
+      "description": "GitHub releases packages with update.github.identifier",
       "managerFilePatterns": [
-        "/^apks/(ghup|gitea-mirror|terraform-.*)\\.yaml$/"
+        "apks/*.yaml"
       ],
       "matchStrings": [
-        "package:\\s*\\n\\s*name:\\s*(?<depName>\\S+)\\s*\\n\\s*version:\\s*(?<currentValue>\\S+)[\\s\\S]*?update:[\\s\\S]*?github:[\\s\\S]*?identifier:\\s*(?<packageName>\\S+)",
+        "package:\\s*\\n\\s*name:\\s*(?<depName>\\S+)\\s*\\n\\s*version:\\s*(?<currentValue>\\S+)[\\s\\S]*?update:[\\s\\S]*?github:[\\s\\S]*?identifier:\\s*(?<packageName>\\S+)"
+      ],
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "{{{packageName}}}-{{{depName}}}",
+      "versioningTemplate": "semver"
+    },
+    {
+      "customType": "regex",
+      "description": "GitHub releases packages with git-checkout repository",
+      "managerFilePatterns": [
+        "apks/*.yaml"
+      ],
+      "matchStrings": [
         "package:\\s*\\n\\s*name:\\s*(?<depName>[^\\s]+)\\s*\\n\\s*version:\\s*(?<currentValue>\\S+)[\\s\\S]*?pipeline:[\\s\\S]*?repository:\\s*https://github.com/(?<packageName>[^/\\s]+/[^/\\s]+)"
       ],
       "datasourceTemplate": "github-releases",
@@ -38,15 +51,16 @@
     },
     {
       "customType": "regex",
+      "description": "Maven packages from repo1.maven.org",
       "managerFilePatterns": [
-        "/^apks/bouncycastle.*\\.yaml$/"
+        "apks/*.yaml"
       ],
       "matchStrings": [
-        "package:\\s*\\n\\s*name:\\s*(?<depName>bouncycastle-fips)\\s*\\n\\s*version:\\s*(?<currentValue>[0-9.]+)[\\s\\S]*?uri:\\s*https://repo1\\.maven\\.org"
+        "package:\\s*\\n\\s*name:\\s*(?<depName>[^\\s]+)\\s*\\n\\s*version:\\s*(?<currentValue>[0-9.]+)[\\s\\S]*?uri:\\s*https://repo1\\.maven\\.org/maven2/(?<groupPath>[^/]+(?:/[^/]+)*)/(?<artifactId>[^/]+)/\\$\\{\\{package\\.version\\}\\}/[^\\s]+"
       ],
       "datasourceTemplate": "maven",
-      "depNameTemplate": "org.bouncycastle:bc-fips",
-      "packageNameTemplate": "org.bouncycastle:bc-fips",
+      "depNameTemplate": "{{#replace '/' ':' groupPath}}:{{artifactId}}",
+      "packageNameTemplate": "{{#replace '/' ':' groupPath}}:{{artifactId}}",
       "versioningTemplate": "maven"
     }
   ],
