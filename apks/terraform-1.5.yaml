@@ -1,0 +1,49 @@
+package:
+  name: terraform-1.5
+  version: 1.5.6
+  epoch: 0
+  copyright:
+    - license: MPL-2.0
+  dependencies:
+    provides:
+      - terraform=${{package.full-version}}
+
+pipeline:
+  - uses: git-checkout
+    with:
+      repository: https://github.com/hashicorp/terraform
+      tag: v${{package.version}}
+      expected-commit: ee58ac1851c8a433005df9863ed47796a9f6b5e7
+
+  - uses: go/bump
+    with:
+      deps: |-
+        github.com/golang-jwt/jwt/v4@v4.5.2
+        github.com/hashicorp/go-getter@v1.7.5
+        github.com/hashicorp/go-retryablehttp@v0.7.7
+        github.com/hashicorp/go-slug@v0.16.3
+        golang.org/x/crypto@v0.37.0
+        golang.org/x/net@v0.39.0
+        golang.org/x/oauth2@v0.30.0
+        google.golang.org/grpc@v1.56.3
+        google.golang.org/protobuf@v1.33.0
+
+  - uses: go/build
+    with:
+      packages: .
+      output: terraform
+
+test:
+  pipeline:
+    - name: Terraform Initialization
+      runs: |
+        echo "provider \"local\" {}" > example.tf
+        terraform init -input=false || exit 1
+        terraform --version
+        terraform --help
+    - name: Terraform Plan Creation
+      runs: |
+        terraform plan -input=false -out=tfplan || exit 1
+    - name: Terraform Apply Execution
+      runs: |
+        terraform apply -input=false tfplan || exit 1
