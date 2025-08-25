@@ -6,16 +6,15 @@
   "regexManagers": [
     {
       "fileMatch": [
-        "apks/*.yaml"
+        "^apks/.*\\.ya?ml$"
       ],
       "matchStrings": [
-        "package:\\s*\\n\\s*name:\\s*terraform-[^\\n]+\\n\\s*version:\\s*(?<currentValue>[^\\s\\n]+)"
+        "package:[\\s\\S]*?name:\\s*terraform-[^\\n]*[\\s\\S]*?version:\\s*(?<currentValue>[^\\s\\n]+)"
       ],
       "depNameTemplate": "hashicorp/terraform",
       "datasourceTemplate": "github-releases",
       "depTypeTemplate": "terraform-version",
-      "extractVersionTemplate": "^v?(?<version>.*)$",
-      "registryUrlTemplate": "https://github.com/hashicorp/terraform"
+      "extractVersionTemplate": "^v?(?<version>.*)$"
     }
   ],
   "packageRules": [
@@ -26,9 +25,7 @@
       "matchPackageNames": [
         "hashicorp/terraform"
       ],
-      "updateTypes": [
-        "patch"
-      ],
+      "allowedVersions": "/^v?1\\.12\\./",
       "automerge": true,
       "schedule": [
         "before 6am on monday"
