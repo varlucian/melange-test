@@ -25,24 +25,12 @@
   "customManagers": [
     {
       "customType": "regex",
-      "description": "GitHub releases packages with update.github.identifier",
+      "description": "GitHub releases packages",
       "managerFilePatterns": [
         "apks/*.yaml"
       ],
       "matchStrings": [
-        "package:\\s*\\n\\s*name:\\s*(?<depName>\\S+)\\s*\\n\\s*version:\\s*(?<currentValue>\\S+)[\\s\\S]*?update:[\\s\\S]*?github:[\\s\\S]*?identifier:\\s*(?<packageName>\\S+)"
-      ],
-      "datasourceTemplate": "github-releases",
-      "depNameTemplate": "{{{packageName}}}-{{{depName}}}",
-      "versioningTemplate": "semver"
-    },
-    {
-      "customType": "regex",
-      "description": "GitHub releases packages with git-checkout repository",
-      "managerFilePatterns": [
-        "apks/*.yaml"
-      ],
-      "matchStrings": [
+        "package:\\s*\\n\\s*name:\\s*(?<depName>\\S+)\\s*\\n\\s*version:\\s*(?<currentValue>\\S+)[\\s\\S]*?update:[\\s\\S]*?github:[\\s\\S]*?identifier:\\s*(?<packageName>\\S+)",
         "package:\\s*\\n\\s*name:\\s*(?<depName>[^\\s]+)\\s*\\n\\s*version:\\s*(?<currentValue>\\S+)[\\s\\S]*?pipeline:[\\s\\S]*?repository:\\s*https://github.com/(?<packageName>[^/\\s]+/[^/\\s]+)"
       ],
       "datasourceTemplate": "github-releases",
