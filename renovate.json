@@ -11,9 +11,8 @@
         "apks/*.yaml"
       ],
       "matchStrings": [
-        "[{\"depName\": \"hashicorp/terraform\", \"currentValue\": package.version}]"
+        "[{\"depName\": $substringAfter(pipeline[uses=\"git-checkout\"].with.repository, \"https://github.com/\"), \"currentValue\": package.version, \"sourceUrl\": pipeline[uses=\"git-checkout\"].with.repository}]"
       ],
-      "depNameTemplate": "hashicorp/terraform",
       "datasourceTemplate": "github-releases"
     }
   ],
