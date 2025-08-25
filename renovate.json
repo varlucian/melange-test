@@ -5,10 +5,25 @@
   ],
   "packageRules": [
     {
-      "matchPackagePatterns": [
-        "^hashicorp/terraform-terraform-"
+      "matchPackageNames": [
+        "hashicorp/terraform-terraform-1.12"
       ],
-      "groupName": null,
+      "allowedVersions": "/^v?1\\.12\\./",
+      "major": {
+        "enabled": false
+      },
+      "minor": {
+        "enabled": false
+      },
+      "patch": {
+        "enabled": true
+      }
+    },
+    {
+      "matchPackageNames": [
+        "hashicorp/terraform-terraform-1.5"
+      ],
+      "allowedVersions": "/^v?1\\.5\\./",
       "major": {
         "enabled": false
       },
@@ -44,11 +59,11 @@
         "apks/*.yaml"
       ],
       "matchStrings": [
-        "package:\\s*\\n\\s*name:\\s*(?<depName>[^\\s]+)\\s*\\n\\s*version:\\s*(?<currentValue>[0-9.]+)[\\s\\S]*?uri:\\s*https://repo1\\.maven\\.org/maven2/(?<groupPath>[^/]+(?:/[^/]+)*)/(?<artifactId>[^/]+)/\\$\\{\\{package\\.version\\}\\}/[^\\s]+"
+        "package:\\s*\\n\\s*name:\\s*(?<depName>[^\\s]+)\\s*\\n\\s*version:\\s*(?<currentValue>[0-9.]+)[\\s\\S]*?uri:\\s*https://repo1\\.maven\\.org/maven2/(?<packageName>[^/]+(?:/[^/]+)*)/(?<artifactId>[^/]+)/\\$\\{\\{package\\.version\\}\\}/[^\\s]+"
       ],
       "datasourceTemplate": "maven",
-      "depNameTemplate": "{{#replace '/' ':' groupPath}}:{{artifactId}}",
-      "packageNameTemplate": "{{#replace '/' ':' groupPath}}:{{artifactId}}",
+      "depNameTemplate": "{{packageName}}:{{artifactId}}",
+      "packageNameTemplate": "{{packageName}}:{{artifactId}}",
       "versioningTemplate": "maven"
     }
   ],
