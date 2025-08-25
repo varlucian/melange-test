@@ -1,0 +1,45 @@
+package:
+  name: terraform-1.11
+  version: 1.11.4
+  epoch: 2
+  copyright:
+    - license: BSL
+  dependencies:
+    provides:
+      - terraform=${{package.full-version}}
+
+pipeline:
+  - uses: git-checkout
+    with:
+      repository: https://github.com/hashicorp/terraform
+      tag: v${{package.version}}
+      expected-commit: 35645b8fca68ff7e0b8785a3b563724a529a0caf
+
+  - uses: go/bump
+    with:
+      go-version: 1.23.10
+      deps: |-
+        golang.org/x/crypto@v0.37.0
+        golang.org/x/net@v0.39.0
+        github.com/cloudflare/circl@v1.6.1
+
+  - uses: go/build
+    with:
+      go-package: go-1.23 # compatibility with GODEBUG=tlskyber=0
+      packages: .
+      output: terraform
+
+test:
+  pipeline:
+    - name: Terraform Initialization
+      runs: |
+        echo "provider \"local\" {}" > example.tf
+        terraform init -input=false || exit 1
+        terraform --version
+        terraform --help
+    - name: Terraform Plan Creation
+      runs: |
+        terraform plan -input=false -out=tfplan || exit 1
+    - name: Terraform Apply Execution
+      runs: |
+        terraform apply -input=false tfplan || exit 1
