@@ -3,35 +3,25 @@
   "extends": [
     "config:base"
   ],
-  "baseBranchPatterns": [
-    "renovate-terraform-debug"
-  ],
-  "regexManagers": [
+  "customManagers": [
     {
-      "fileMatch": [
+      "customType": "jsonata",
+      "fileFormat": "yaml",
+      "managerFilePatterns": [
         "apks/*.yaml"
       ],
       "matchStrings": [
-        "package:\\s*\\n\\s*version:\\s*[\"'](?<currentValue>[^\"']+)[\"']"
+        "[{\"depName\": $substringAfter(pipeline[uses=\"git-checkout\"].with.repository, \"https://github.com/\"), \"currentValue\": package.version, \"sourceUrl\": pipeline[uses=\"git-checkout\"].with.repository}]"
       ],
-      "depNameTemplate": "terraform",
-      "datasourceTemplate": "github-releases",
-      "depTypeTemplate": "terraform-version",
-      "extractVersionTemplate": "^v?(?<version>.*)$",
-      "registryUrlTemplate": "https://github.com/hashicorp/terraform"
+      "datasourceTemplate": "github-releases"
     }
   ],
   "packageRules": [
     {
-      "matchDatasources": [
-        "github-releases"
-      ],
       "matchPackageNames": [
-        "terraform"
+        "hashicorp/terraform"
       ],
-      "updateTypes": [
-        "patch"
-      ],
+      "allowedVersions": "/^v?1\\.12\\./",
       "automerge": true,
       "schedule": [
         "before 6am on monday"
