@@ -5,16 +5,16 @@
   ],
   "customManagers": [
     {
+      "customType": "jsonata",
+      "fileFormat": "yaml",
       "managerFilePatterns": [
         "apks/*.yaml"
       ],
       "matchStrings": [
-        "package:[\\s\\S]*?name:\\s*terraform-[^\\n]*[\\s\\S]*?version:\\s*(?<currentValue>[^\\s\\n]+)"
+        "[{\"depName\": \"hashicorp/terraform\", \"currentValue\": package.version}]"
       ],
       "depNameTemplate": "hashicorp/terraform",
-      "datasourceTemplate": "github-releases",
-      "depTypeTemplate": "terraform-version",
-      "extractVersionTemplate": "^v?(?<version>.*)$"
+      "datasourceTemplate": "github-releases"
     }
   ],
   "packageRules": [
