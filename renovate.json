@@ -23,7 +23,7 @@
         "apks/bouncycastle*.yaml"
       ],
       "matchStrings": [
-        "[{\"depName\": package.name, \"currentValue\": package.version}]"
+        "[{\"depName\": package.name, \"packageName\": $join($split($substringAfter(pipeline[uses=\"fetch\"].with.uri, \"https://repo1.maven.org/maven2/\"), \"/\")[0:2], \":\"), \"currentValue\": package.version}]"
       ],
       "datasourceTemplate": "maven",
       "depNameTemplate": "{{depName}}:{{currentValue}}",
