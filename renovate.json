@@ -1,94 +1,41 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:recommended"
+    "config:base"
+  ],
+  "baseBranchPatterns": [
+    "renovate-terraform-debug"
+  ],
+  "regexManagers": [
+    {
+      "fileMatch": [
+        "apks/*.yaml"
+      ],
+      "matchStrings": [
+        "package:\\s*\\n\\s*version:\\s*[\"'](?<currentValue>[^\"']+)[\"']"
+      ],
+      "depNameTemplate": "terraform",
+      "datasourceTemplate": "github-releases",
+      "depTypeTemplate": "terraform-version",
+      "extractVersionTemplate": "^v?(?<version>.*)$",
+      "registryUrlTemplate": "https://github.com/hashicorp/terraform"
+    }
   ],
   "packageRules": [
     {
+      "matchDatasources": [
+        "github-releases"
+      ],
       "matchPackageNames": [
-        "hashicorp/terraform-terraform-1.12"
+        "terraform"
       ],
-      "allowedVersions": "/^v?1\\.12\\./",
-      "rangeStrategy": "pin",
-      "respectLatest": false,
-      "ignoreUnstable": false,
-      "major": {
-        "enabled": false
-      },
-      "minor": {
-        "enabled": false
-      },
-      "patch": {
-        "enabled": true
-      }
-    },
-    {
-      "matchPackageNames": [
-        "hashicorp/terraform-terraform-1.5"
+      "updateTypes": [
+        "patch"
       ],
-      "allowedVersions": "/^v?1\\.5\\./",
-      "rangeStrategy": "pin", 
-      "respectLatest": false,
-      "ignoreUnstable": false,
-      "major": {
-        "enabled": false
-      },
-      "minor": {
-        "enabled": false
-      },
-      "patch": {
-        "enabled": true
-      }
+      "automerge": true,
+      "schedule": [
+        "before 6am on monday"
+      ]
     }
-  ],
-  "prHourlyLimit": 5,
-  "recreateClosed": true,
-  "customManagers": [
-    {
-      "customType": "regex",
-      "description": "GitHub releases packages",
-      "managerFilePatterns": [
-        "apks/*.yaml"
-      ],
-      "matchStrings": [
-        "package:\\s*\\n\\s*name:\\s*(?<depName>\\S+)\\s*\\n\\s*version:\\s*(?<currentValue>\\S+)[\\s\\S]*?update:[\\s\\S]*?github:[\\s\\S]*?identifier:\\s*(?<packageName>\\S+)",
-        "package:\\s*\\n\\s*name:\\s*(?<depName>[^\\s]+)\\s*\\n\\s*version:\\s*(?<currentValue>\\S+)[\\s\\S]*?pipeline:[\\s\\S]*?repository:\\s*https://github.com/(?<packageName>[^/\\s]+/[^/\\s]+)"
-      ],
-      "datasourceTemplate": "github-releases",
-      "depNameTemplate": "{{{packageName}}}-{{{depName}}}",
-      "versioningTemplate": "semver"
-    },
-    {
-      "customType": "regex",
-      "description": "Maven packages from repo1.maven.org",
-      "managerFilePatterns": [
-        "apks/*.yaml"
-      ],
-      "matchStrings": [
-        "package:\\s*\\n\\s*name:\\s*(?<depName>[^\\s]+)\\s*\\n\\s*version:\\s*(?<currentValue>[0-9.]+)[\\s\\S]*?uri:\\s*https://repo1\\.maven\\.org/maven2/(?<packageName>[^/]+(?:/[^/]+)*)/(?<artifactId>[^/]+)/\\$\\{\\{package\\.version\\}\\}/[^\\s]+"
-      ],
-      "datasourceTemplate": "maven",
-      "depNameTemplate": "{{packageName}}:{{artifactId}}",
-      "packageNameTemplate": "{{packageName}}:{{artifactId}}",
-      "versioningTemplate": "maven"
-    }
-  ],
-  "commitMessageAction": "update",
-  "commitMessageTopic": "{{packageName}}",
-  "commitMessageExtra": "to {{newVersion}}",
-  "timezone": "UTC",
-  "labels": [
-    "dependencies",
-    "automated"
-  ],
-  "automerge": false,
-  "major": {
-    "automerge": false
-  },
-  "minor": {
-    "automerge": false
-  },
-  "patch": {
-    "automerge": false
-  }
+  ]
 }
