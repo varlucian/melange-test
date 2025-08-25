@@ -8,12 +8,24 @@
       "customType": "jsonata",
       "fileFormat": "yaml",
       "managerFilePatterns": [
-        "apks/*.yaml"
+        "apks/*.yaml",
+        "apks/!(bouncycastle*).yaml"
       ],
       "matchStrings": [
         "[{\"depName\": $substringAfter(pipeline[uses=\"git-checkout\"].with.repository, \"https://github.com/\"), \"currentValue\": package.version, \"sourceUrl\": pipeline[uses=\"git-checkout\"].with.repository}]"
       ],
       "datasourceTemplate": "github-releases"
+    },
+    {
+      "customType": "jsonata",
+      "fileFormat": "yaml",
+      "managerFilePatterns": [
+        "apks/bouncycastle*.yaml"
+      ],
+      "matchStrings": [
+        "[{\"depName\": \"bc-fips\", \"packageName\": \"org.bouncycastle:bc-fips\", \"currentValue\": package.version}]"
+      ],
+      "datasourceTemplate": "maven"
     }
   ],
   "packageRules": [
