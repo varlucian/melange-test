@@ -18,11 +18,15 @@
   ],
   "packageRules": [
     {
-      "matchPackageNames": [
-        "hashicorp/terraform"
+      "description": "Generic rule: ONLY allow patch updates for terraform - no minor/major",
+      "matchFileNames": [
+        "apks/terraform-*.yaml"
       ],
-      "allowedVersions": "/^v?1\\.12\\./",
-      "automerge": true,
+      "separateMinorPatch": true,
+      "minor": {
+        "enabled": false
+      },
+      "groupName": null,
       "schedule": [
         "before 6am on monday"
       ]
