@@ -26,7 +26,7 @@
     {
       "customType": "regex",
       "managerFilePatterns": [
-        "/^apks/.*\\.yaml$/"
+        "/^apks/(ghup|gitea-mirror|terraform-.*)\\.yaml$/"
       ],
       "matchStrings": [
         "package:\\s*\\n\\s*name:\\s*(?<depName>\\S+)\\s*\\n\\s*version:\\s*(?<currentValue>\\S+)[\\s\\S]*?update:[\\s\\S]*?github:[\\s\\S]*?identifier:\\s*(?<packageName>\\S+)",
@@ -35,6 +35,19 @@
       "datasourceTemplate": "github-releases",
       "depNameTemplate": "{{{packageName}}}-{{{depName}}}",
       "versioningTemplate": "semver"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^apks/bouncycastle.*\\.yaml$/"
+      ],
+      "matchStrings": [
+        "package:\\s*\\n\\s*name:\\s*(?<depName>bouncycastle-fips)\\s*\\n\\s*version:\\s*(?<currentValue>[0-9.]+)[\\s\\S]*?uri:\\s*https://repo1\\.maven\\.org"
+      ],
+      "datasourceTemplate": "maven",
+      "depNameTemplate": "org.bouncycastle:bc-fips",
+      "packageNameTemplate": "org.bouncycastle:bc-fips",
+      "versioningTemplate": "maven"
     }
   ],
   "commitMessageAction": "update",
