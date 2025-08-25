@@ -3,16 +3,13 @@
   "extends": [
     "config:base"
   ],
-  "baseBranchPatterns": [
-    "renovate-terraform-debug"
-  ],
   "regexManagers": [
     {
       "fileMatch": [
         "apks/*.yaml"
       ],
       "matchStrings": [
-        "package:\\s*\\n\\s*version:\\s*[\"'](?<currentValue>[^\"']+)[\"']"
+        "package:\\s*\\n\\s*name:\\s*[^\\n]+\\n\\s*version:\\s*(?<currentValue>[^\\s\\n]+)"
       ],
       "depNameTemplate": "terraform",
       "datasourceTemplate": "github-releases",
