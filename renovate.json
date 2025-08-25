@@ -3,10 +3,10 @@
   "extends": [
     "config:base"
   ],
-  "regexManagers": [
+  "customManagers": [
     {
-      "fileMatch": [
-        "^apks/.*\\.ya?ml$"
+      "managerFilePatterns": [
+        "apks/*.yaml"
       ],
       "matchStrings": [
         "package:[\\s\\S]*?name:\\s*terraform-[^\\n]*[\\s\\S]*?version:\\s*(?<currentValue>[^\\s\\n]+)"
