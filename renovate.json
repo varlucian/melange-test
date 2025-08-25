@@ -23,7 +23,7 @@
         "apks/bouncycastle*.yaml"
       ],
       "matchStrings": [
-        "[{\"depName\": \"bc-fips\", \"packageName\": \"org.bouncycastle:bc-fips\", \"currentValue\": package.version}]"
+        "($uri := pipeline[uses=\"fetch\"].with.uri; $parts := $split($uri, \"/\"); $artifactName := $parts[-3]; $pathAfterMaven := $substringAfter($uri, \"https://repo1.maven.org/maven2/\"); $groupPath := $substringBefore($pathAfterMaven, \"/\" & $artifactName); $groupId := $replace($groupPath, \"/\", \".\"); [{\"depName\": $artifactName, \"packageName\": $groupId & \":\" & $artifactName, \"currentValue\": package.version}])"
       ],
       "datasourceTemplate": "maven"
     }
