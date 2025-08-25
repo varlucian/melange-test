@@ -9,9 +9,9 @@
         "apks/*.yaml"
       ],
       "matchStrings": [
-        "package:\\s*\\n\\s*name:\\s*[^\\n]+\\n\\s*version:\\s*(?<currentValue>[^\\s\\n]+)"
+        "package:\\s*\\n\\s*name:\\s*terraform-[^\\n]+\\n\\s*version:\\s*(?<currentValue>[^\\s\\n]+)"
       ],
-      "depNameTemplate": "terraform",
+      "depNameTemplate": "hashicorp/terraform",
       "datasourceTemplate": "github-releases",
       "depTypeTemplate": "terraform-version",
       "extractVersionTemplate": "^v?(?<version>.*)$",
@@ -24,8 +24,9 @@
         "github-releases"
       ],
       "matchPackageNames": [
-        "terraform"
+        "hashicorp/terraform"
       ],
+      "allowedVersions": "/^v?1\\.12\\./",
       "updateTypes": [
         "patch"
       ],
