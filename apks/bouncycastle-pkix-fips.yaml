@@ -1,0 +1,19 @@
+package:
+  name: bouncycastle-pkix-fips
+  version: 2.1.9
+  epoch: 0
+  description: "Bouncy Castle PKIX/CMS/EAC/PKCS/OCSP/TSP/OPENSSL"
+  copyright:
+    - license: MIT
+
+pipeline:
+  - uses: fetch
+    with:
+      uri: https://repo1.maven.org/maven2/org/bouncycastle/bcpkix-fips/${{package.version}}/bcpkix-fips-${{package.version}}.jar
+      extract: false
+      expected-sha256: c31a4aeeda18f98b06deab50f6c5fa972eb87555ef134268be28eed95fadece7
+
+  - name: install
+    runs: |
+      mv bcpkix-fips-${{package.version}}.jar bcpkix-fips.jar
+      install -Dm644 -t "${{targets.destdir}}"/usr/share/java/bouncycastle-fips bcpkix-fips.jar
