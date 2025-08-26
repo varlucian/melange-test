@@ -8,6 +8,19 @@
       "customType": "jsonata",
       "fileFormat": "yaml",
       "managerFilePatterns": [
+        "apks/amazon-corretto-*.yaml"
+      ],
+      "matchStrings": [
+        "[{\"currentValue\": package.version}]"
+      ],
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "corretto/corretto-21",
+      "versioningTemplate": "maven"
+    },
+    {
+      "customType": "jsonata",
+      "fileFormat": "yaml",
+      "managerFilePatterns": [
         "apks/*.yaml",
         "apks/!(bouncycastle*).yaml"
       ],
