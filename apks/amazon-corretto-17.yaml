@@ -1,6 +1,6 @@
 package:
   name: amazon-corretto-17
-  version: 17.0.14.7.0
+  version: 17.0.16.8.1
   epoch: 2
   target-architecture:
     - aarch64
