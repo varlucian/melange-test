@@ -1,0 +1,178 @@
+package:
+  name: amazon-corretto-21
+  version: 21.0.8.9.1
+  epoch: 0
+  target-architecture:
+    - aarch64
+    - x86_64
+  description: Amazon Corretto 21
+  copyright:
+    - license: GPL-2.0-or-later
+  dependencies:
+    runtime:
+      - amazon-corretto-21-jre # nexthink
+
+environment:
+  environment:
+    # This is needed to work around the error date 1970-01-01T00:00:00Z is not within the valid range 1980-01-01T00:00:02Z to 2099-12-31T23:59:59Z
+    SOURCE_DATE_EPOCH: 315532900
+
+pipeline:
+  - pipeline:
+      - if: ${{build.arch}} == "aarch64"
+        uses: fetch
+        with:
+          uri: https://corretto.aws/downloads/resources/${{package.version}}/amazon-corretto-${{package.version}}-linux-${{build.arch}}.tar.gz
+          expected-sha256: c301a227277bcdbebc334ff78d9112c8aac456d35ee448979e407b1f15e53d91
+          extract: true
+          strip-components: 0
+
+      - if: ${{build.arch}} == "x86_64"
+        uses: fetch
+        with:
+          uri: https://corretto.aws/downloads/resources/${{package.version}}/amazon-corretto-${{package.version}}-linux-x64.tar.gz
+          expected-sha256: 86be550b203970414df9d181a72607731a1a592f7c5416f649bcce9a537e7572
+          extract: true
+          strip-components: 0
+
+  - runs: |
+      _java_home="usr/lib/jvm/java-21-amazon-corretto"
+
+      mkdir -p "${{targets.destdir}}"/$_java_home
+      cp -r amazon-corretto-*/* "${{targets.destdir}}"/$_java_home
+      rm "${{targets.destdir}}"/$_java_home/lib/src.zip
+
+subpackages:
+  - name: "amazon-corretto-21-dbg"
+    description: "Amazon Corretto 21 Java Debug Symbols"
+    pipeline:
+      - uses: split/debug
+    dependencies:
+      runtime:
+        - amazon-corretto-21
+
+  - name: "amazon-corretto-21-jre"
+    description: "Amazon Corretto 21 Java Runtime Environment"
+    dependencies:
+      runtime:
+        - alsa-lib
+        - freetype
+        - giflib
+        - libfontconfig1
+        - libjpeg-turbo
+        - libx11
+        - libxext
+        - libxi
+        - libxrender
+        - libxtst
+        - amazon-corretto-21-jre-base
+        - ttf-dejavu
+    pipeline:
+      - runs: |
+          _java_home="usr/lib/jvm/java-21-amazon-corretto"
+
+          mkdir -p "${{targets.subpkgdir}}"/$_java_home/lib
+          mv "${{targets.destdir}}"/$_java_home/lib/libawt_xawt.so \
+              "${{targets.destdir}}"/$_java_home/lib/libfontmanager.so \
+              "${{targets.destdir}}"/$_java_home/lib/libjavajpeg.so \
+              "${{targets.destdir}}"/$_java_home/lib/libjawt.so \
+              "${{targets.destdir}}"/$_java_home/lib/libjsound.so \
+              "${{targets.destdir}}"/$_java_home/lib/liblcms.so \
+              "${{targets.destdir}}"/$_java_home/lib/libsplashscreen.so \
+              "${{targets.subpkgdir}}"/$_java_home/lib
+
+  - name: "amazon-corretto-21-jre-base"
+    description: "Amazon Corretto 21 Java Runtime Environment (headless)"
+    dependencies:
+      runtime:
+        - java-common
+        - java-cacerts
+    pipeline:
+      - runs: |
+          _java_home="usr/lib/jvm/java-21-amazon-corretto"
+
+          mkdir -p "${{targets.subpkgdir}}"/$_java_home
+          mv "${{targets.destdir}}"/$_java_home/lib \
+             "${{targets.subpkgdir}}"/$_java_home
+
+          mkdir -p "${{targets.subpkgdir}}"/$_java_home/bin
+          for i in java \
+                    jfr \
+                    jrunscript \
+                    jwebserver \
+                    keytool \
+                    rmiregistry; do
+            mv "${{targets.destdir}}"/$_java_home/bin/$i "${{targets.subpkgdir}}"/$_java_home/bin/$i
+          done
+
+          mv "${{targets.destdir}}"/$_java_home/legal "${{targets.subpkgdir}}"/$_java_home
+          mv "${{targets.destdir}}"/$_java_home/conf "${{targets.subpkgdir}}"/$_java_home
+          mv "${{targets.destdir}}"/$_java_home/release "${{targets.subpkgdir}}"/$_java_home
+          for i in ASSEMBLY_EXCEPTION \
+                    LICENSE \
+                    README.md; do
+             mv "${{targets.destdir}}"/$_java_home/$i "${{targets.subpkgdir}}"/$_java_home
+          done
+
+          # symlink to shared java cacerts store
+          rm -f "${{targets.subpkgdir}}"/$_java_home/lib/security/cacerts
+          ln -sf /etc/ssl/certs/java/cacerts \
+            "${{targets.subpkgdir}}"/$_java_home/lib/security/cacerts
+
+          # symlink for `java-common` to work (which expects jre in $_java_home/jre)
+          ln -sf . "${{targets.subpkgdir}}/$_java_home/jre"
+
+  - name: "amazon-corretto-21-jmods"
+    description: "Amazon Corretto 21 jmods"
+    dependencies:
+      provides:
+        - amazon-corretto-jmods=${{package.full-version}}
+    pipeline:
+      - runs: |
+          mkdir -p "${{targets.subpkgdir}}"/usr/lib/jvm/java-21-amazon-corretto
+          mv "${{targets.destdir}}"/usr/lib/jvm/java-21-amazon-corretto/jmods \
+             "${{targets.subpkgdir}}"/usr/lib/jvm/java-21-amazon-corretto
+
+  - name: "amazon-corretto-21-doc"
+    description: "Amazon Corretto 21 Documentation"
+    pipeline:
+      - runs: |
+          mkdir -p "${{targets.subpkgdir}}"/usr/lib/jvm/java-21-amazon-corretto
+          mv "${{targets.destdir}}"/usr/lib/jvm/java-21-amazon-corretto/man \
+             "${{targets.subpkgdir}}"/usr/lib/jvm/java-21-amazon-corretto
+
+  - name: "amazon-corretto-21-headless-default-jvm"
+    description: "Use the amazon-corretto-21 headless JVM as the default JVM"
+    dependencies:
+      runtime:
+        - amazon-corretto-21-jre-base
+      provides:
+        - default-jvm=1.21
+        - default-jvm-lts=1.21
+    pipeline:
+      - runs: |
+          mkdir -p "${{targets.subpkgdir}}"/usr/lib/jvm
+          ln -sf java-21-amazon-corretto "${{targets.subpkgdir}}"/usr/lib/jvm/default-jvm
+
+  - name: "amazon-corretto-21-default-jvm"
+    description: "Use the amazon-corretto-21 JVM as the default JVM"
+    dependencies:
+      runtime:
+        - amazon-corretto-21-jre
+      provides:
+        - default-jvm=1.21
+        - default-jvm-lts=1.21
+    pipeline:
+      - runs: |
+          mkdir -p "${{targets.subpkgdir}}"/usr/lib/jvm
+          ln -sf java-21-amazon-corretto "${{targets.subpkgdir}}"/usr/lib/jvm/default-jvm
+
+  - name: "amazon-corretto-21-default-jdk"
+    description: "Use the amazon-corretto-21 JVM as the default JVM with the JDK installed"
+    dependencies:
+      runtime:
+        - amazon-corretto-21-default-jvm
+        - amazon-corretto-21
+      provides:
+        - default-jdk=1.21
+        - default-jdk-lts=1.21
