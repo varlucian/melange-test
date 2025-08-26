@@ -1,6 +1,6 @@
 package:
   name: bouncycastle-pkix-fips
-  version: 2.1.9
+  version: 2.1.7
   epoch: 0
   description: "Bouncy Castle PKIX/CMS/EAC/PKCS/OCSP/TSP/OPENSSL"
   copyright:
