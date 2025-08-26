@@ -11,10 +11,9 @@
         "apks/amazon-corretto-*.yaml"
       ],
       "matchStrings": [
-        "[{\"currentValue\": package.version}]"
+        "[{\"depName\": \"corretto/corretto-\" & $split(package.version, \".\")[0], \"currentValue\": package.version}]"
       ],
       "datasourceTemplate": "github-releases",
-      "depNameTemplate": "corretto/corretto-21",
       "versioningTemplate": "maven"
     },
     {
