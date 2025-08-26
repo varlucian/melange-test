@@ -1,6 +1,6 @@
 package:
   name: amazon-corretto-11
-  version: 11.0.28.4.0
+  version: 11.0.28.6.1
   epoch: 0
   target-architecture:
     - aarch64
